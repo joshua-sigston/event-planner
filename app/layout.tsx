@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Commissioner, Concert_One } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import { NeonAuthUIProvider, UserButton } from "@neondatabase/auth/react";
+import { authClient } from "@/lib/auth/client";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+
+const commissioner = Commissioner({
+  variable: "--font-commissioner",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const concert_one = Concert_One({
+  variable: "--font-concert-one",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -25,9 +30,22 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${commissioner.variable} ${concert_one.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="bg-slate-200/50 ">
+        <NeonAuthUIProvider authClient={authClient}>
+          <main className="h-screen container mx-auto overflow-hidden text-black">
+
+            <header className="flex justify-between items-center mx-auto p-4">
+              <Link href="/" className="font-semibold text-xl"><span>Events Manager</span></Link>
+              <UserButton size="icon" />
+            </header>
+            {children}
+
+          </main>
+        </NeonAuthUIProvider>
+      </body>
     </html>
   );
 }
