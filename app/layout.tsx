@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Commissioner, Concert_One } from "next/font/google";
+import { Commissioner, Concert_One, Geist } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { NeonAuthUIProvider, UserButton } from "@neondatabase/auth/react";
 import { authClient } from "@/lib/auth/client";
+import { cn } from "@/lib/utils";
 
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const commissioner = Commissioner({
   variable: "--font-commissioner",
@@ -30,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${commissioner.variable} ${concert_one.variable} h-full antialiased`}
+      className={cn("h-full", "antialiased", commissioner.variable, concert_one.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
       <body className="bg-slate-200/50 ">
