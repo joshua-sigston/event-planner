@@ -10,7 +10,7 @@ interface DashboardProps {
     userId: string
 }
 
-function countByStatus(rsvps: { status: PrismaRsvpStatus }[]) {
+export function countByStatus(rsvps: { status: PrismaRsvpStatus }[]) {
     let accepted = 0;
     let declined = 0;
     let maybe = 0;
