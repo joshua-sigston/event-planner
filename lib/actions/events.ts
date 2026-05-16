@@ -45,3 +45,28 @@ export async function createEventAction(formData: FormData) {
 
     redirect(`/events/${created.id}`)
 }
+
+export async function createInviteLinkAction(eventId: string) {
+    const session = await getSession()
+    const userId = session.data?.user.id
+
+    if (!userId) {
+        throw new Error("You must be logged in to create an event.")
+    }
+    const owns = await prisma.event.findFirst({
+        where: { id: eventId, ownerUserId: userId },
+        select: { id: true }
+    })
+
+    const created = await prisma.event.create({
+        data: {
+            ownerUserId: userId,
+            title: input.title,
+            description: input.description,
+            location: input.location,
+            eventDate: input.eventDate,
+        }
+    })
+
+    redirect(`/events/${created.id}`)
+}
